@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Administración</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+
+    <header>
+        <h1>Gestión de Reservas - Hotel</h1>
+        <button onclick="window.location.href='../Formulario/reserva.html'" class="btn-nueva">
+            Nueva Reserva
+        </button>
+    </header>
+
+    <main class="contenedor-bloques">
+        <section class="bloque">
+            <h2 class="titulo-reservado"> Reservados</h2>
+            <div id="lista-reservado"></div>
+        </section>
+
+        <section class="bloque">
+            <h2 class="titulo-activo"> Activos</h2>
+            <div id="lista-activo"></div>
+        </section>
+
+        <section class="bloque">
+            <h2 class="titulo-finalizado"> Finalizados</h2>
+            <div id="lista-finalizado"></div>
+        </section>
+    </main>
+
+    <script src="home.js"></script>
+</body>
+</html>

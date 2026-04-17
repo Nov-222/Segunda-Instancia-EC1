@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema Hotel - Nueva Reserva</title>
+    <link rel="stylesheet" href="reserva.css">
+</head>
+<body>
+    <main class="contenedor">
+        <header class="encabezado">
+            <a href="../home/home.html" class="encabezado__link">Volver a Home</a>
+            <h1 class="encabezado__titulo">Registro de Estadia</h1>
+        </header>
+
+        <form class="reserva" id="FormReserva">
+            <div class="reserva__grupo">
+                <label class="reserva__etiqueta">Fecha de Entrada</label>
+                <input type="date" id="FechaInicio" class="reserva__campo" required>
+            </div>
+
+            <div class="reserva__grupo">
+                <label class="reserva__etiqueta">Fecha de Salida</label>
+                <input type="date" id="FechaFin" class="reserva__campo" required>
+            </div>
+
+            <div class="reserva__grupo">
+                <label class="reserva__etiqueta">Habitaciones Disponibles</label>
+                <select id="SelectHabitacion" class="reserva__campo" disabled required>
+                    <option value="">Primero seleccione fechas...</option>
+                </select>
+            </div>
+
+            <div class="reserva__grupo">
+                <label class="reserva__etiqueta">Documentos de Huespedes</label>
+                <input type="text" id="Documentos" class="reserva__campo" 
+                       placeholder="Ej: 8472910, 9283741" required>
+                <small>Separe los C.I. por comas</small>
+            </div>
+
+            <button type="submit" class="reserva__boton" id="BtnReservar">Reservar Estadia</button>
+        </form>
+    </main>
+
+    <script src="reserva.js"></script>
+</body>
+</html>

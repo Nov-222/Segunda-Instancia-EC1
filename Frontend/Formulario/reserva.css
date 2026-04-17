@@ -1,0 +1,62 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100vh; 
+}
+
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 100%;
+    max-width: 400px; 
+    padding: 20px;
+}
+
+.encabezado__titulo {
+    font-size: 2em;
+    margin-bottom: 20px;
+    align-self: center; 
+}
+
+
+.reserva {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.reserva__grupo {
+    display: flex;
+    flex-direction: column;
+}
+
+.reserva__etiqueta {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.reserva__campo {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.reserva__boton {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.reserva__boton:hover {
+    background-color: #0056b3;
+}
