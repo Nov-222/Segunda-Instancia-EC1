@@ -56,5 +56,18 @@ namespace Backend_Test.Servicios
 
             Assert.That(resultado, Is.Empty);
         }
+
+        [Test]
+        public void Obtener_Habitaciones_FechaFinEsMenorFechaInicio_DevolverListaVacia()
+        {
+            var Fecha_Inicio = DateTime.Now.AddDays(3);
+            var Fecha_Fin = DateTime.Now.AddDays(2);
+
+            var resultado = servicios.Consultar_Disponibilidad(Fecha_Inicio, Fecha_Fin);
+
+            Assert.That(resultado, Is.Empty);
+
+            repositorio.Verify(f => f.Obtener_Habitaciones(It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Never);
+        }
     }
 }
