@@ -5,7 +5,7 @@ namespace Backend.Controllers
 {
     [ApiController]
     [Route("api/consulta")]
-    internal class ConsultaControlador : ControllerBase
+    public class ConsultaControlador : ControllerBase
     {
         private readonly IConsultaServicio servicio;
 

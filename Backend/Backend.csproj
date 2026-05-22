@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
-		<AnalysisLevel>latest-all</AnalysisLevel>
+		<AnalysisLevel>latest</AnalysisLevel>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<ErrorLog>$(MSBuildProjectDirectory)\roslyn_report.sarif</ErrorLog>

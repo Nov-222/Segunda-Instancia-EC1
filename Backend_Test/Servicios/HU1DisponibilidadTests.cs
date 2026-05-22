@@ -9,6 +9,12 @@ namespace Backend_Test.Servicios
     [TestFixture]
     public class HU1DisponibilidadTests
     {
-        
+        [SetUp]
+        public void Setup()
+        {
+            repsoitorio = new Mock<IReservarEstadia>;
+
+            Servicios = new ReservarServicio(repositorio);
+        }
     }
 }

@@ -1,6 +1,6 @@
 namespace Backend.DTOs
 {
-    internal class HabitacionDisponibleDTO
+    public class HabitacionDisponibleDTO
     {
         public int Id { get; set; }
 
