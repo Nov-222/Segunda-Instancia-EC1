@@ -69,5 +69,26 @@ namespace Backend_Test.Servicios
 
             repositorio.Verify(f => f.Obtener_Habitaciones(It.IsAny<DateTime>(), It.IsAny<DateTime>()), Times.Never);
         }
+
+        [Test]
+        public void Consultar_Disponibilidad_UnDia_DevolverListaConDato()
+        {
+            var hoy = DateTime.Today; 
+            var manana = hoy.AddDays(1); 
+
+            var Lista= new List<HabitacionDisponibleDTO>
+            {
+                new HabitacionDisponibleDTO { Id = 1, Tipo_Nombre = "Standard", Precio_Noche = 100 }
+            };
+
+            repositorio.Setup(r => r.Obtener_Habitaciones(hoy, manana)).Returns(Lista);
+
+            var resultado = servicios.Consultar_Disponibilidad(hoy, manana);
+
+            Assert.That(resultado, Is.Not.Empty);
+
+            
+            repositorio.Verify(r => r.Obtener_Habitaciones(hoy, manana), Times.Once);
+        }
     }
 }
