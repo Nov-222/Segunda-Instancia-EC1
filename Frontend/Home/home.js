@@ -1,75 +1,17 @@
-const API_URL = "http://localhost:5192/api/consulta/reservas";
+import {service} from '../Services/service.js'
 
-async function cargarReservas() {
-    try {
-        const respuesta = await fetch(API_URL);
-        if (!respuesta.ok) throw new Error("No se pudo conectar con el API");
-        
-        const datos = await respuesta.json();
+const Reservado = document.getElementById("lista-reservado");
+const Activo = document.getElementById("lista-activo");
+const Finalizado = document.getElementById("lista-finalizado");
 
-        const divReservado = document.getElementById("lista-reservado");
-        const divActivo = document.getElementById("lista-activo");
-        const divFinalizado = document.getElementById("lista-finalizado");
-
-        divReservado.innerHTML = "";
-        divActivo.innerHTML = "";
-        divFinalizado.innerHTML = "";
-
-        datos.forEach(reserva => {
-            let botonAccion = "";
-
-            if (reserva.estado === "Reservado") {
-                botonAccion = `
-                    <button onclick="ejecutarCheckIn(${reserva.id})" 
-                    style="width:100%; background:#d35400; color:white; border:none; padding:8px; margin-top:10px; border-radius:4px; cursor:pointer; font-weight:bold;">
-                        Registrar Check-In
-                    </button>`;
-            } 
-            else if (reserva.estado === "Activo") {
-                botonAccion = `
-                    <button onclick="ejecutarCheckOut(${reserva.id})" 
-                    style="width:100%; background:#27ae60; color:white; border:none; padding:8px; margin-top:10px; border-radius:4px; cursor:pointer; font-weight:bold;">
-                        Registrar Check-Out
-                    </button>`;
-            }
-
-            const cardHTML = `
-                <div class="card" style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px; box-shadow: 2px 2px 5px rgba(0,0,0,0.05);">
-                    <p><strong>Cliente:</strong> ${reserva.nombre_Cliente}</p>
-                    <p><strong>Habitación:</strong> ${reserva.nro_Habitacion}</p>
-                    <p><strong>Total:</strong> $${reserva.precio_Total}</p>
-                    <p style="font-size: 0.85em; color: #666; margin-top: 5px;">
-                        📅 ${new Date(reserva.fecha_Inicio).toLocaleDateString()} - ${new Date(reserva.fecha_Finalizacion).toLocaleDateString()}
-                    </p>
-                    ${botonAccion} 
-                </div>
-            `;
-
-            if (reserva.estado === "Reservado") {
-                divReservado.innerHTML += cardHTML;
-            } else if (reserva.estado === "Activo") {
-                divActivo.innerHTML += cardHTML;
-            } else if (reserva.estado === "Finalizada") {
-                divFinalizado.innerHTML += cardHTML;
-            }
-        });
-
-    } catch (error) {
-        console.error("Error al cargar reservas:", error);
-    }
-}
-
-async function ejecutarCheckIn(id) {
+async function solicitarCheckIn(id) {
     if (!confirm("¿Desea confirmar el Check-In?")) return;
 
     try {
-        const respuesta = await fetch(`http://localhost:5192/api/consulta/checkin/${id}`, {
-            method: 'PUT'
-        });
-
-        if (respuesta.ok) {
+        const exito = await service.registrarCheckIn(id);
+        if (exito) {
             alert("Check-In exitoso");
-            cargarReservas(); 
+            ObtenerYMostrarReservas(); 
         } else {
             alert("No se pudo procesar el Check-In");
         }
@@ -78,17 +20,14 @@ async function ejecutarCheckIn(id) {
     }
 }
 
-async function ejecutarCheckOut(id) {
+async function solicitarCheckOut(id) {
     if (!confirm("¿Desea confirmar el Check-Out?")) return;
 
     try {
-        const respuesta = await fetch(`http://localhost:5192/api/consulta/checkout/${id}`, {
-            method: 'PUT'
-        });
-
-        if (respuesta.ok) {
+        const exito = await service.registrarCheckOut(id);
+        if (exito) {
             alert("Check-Out exitoso");
-            cargarReservas(); 
+            ObtenerYMostrarReservas(); 
         } else {
             alert("No se pudo procesar el Check-Out.");
         }
@@ -97,4 +36,66 @@ async function ejecutarCheckOut(id) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", cargarReservas);
+function crearTarjetaReserva(reserva) {
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "card";
+    tarjeta.style.cssText = "background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px; box-shadow: 2px 2px 5px rgba(0,0,0,0.05);";
+    const nombreCliente = reserva.nombre_Cliente ? reserva.nombre_Cliente : "Sin Huésped";
+
+    tarjeta.innerHTML = `
+        <p><strong>Cliente:</strong> ${nombreCliente}</p>
+        <p><strong>Habitación:</strong> ${reserva.nro_Habitacion}</p>
+        <p><strong>Total:</strong> $${reserva.precio_Total}</p>
+        <p style="font-size: 0.85em; color: #666; margin-top: 5px;">
+            ${new Date(reserva.fecha_Inicio).toLocaleDateString()} - ${new Date(reserva.fecha_Finalizacion).toLocaleDateString()}
+        </p>
+    `;
+
+    if (reserva.estado === "Reservado") {
+        const botonCheckIn = document.createElement("button");
+        botonCheckIn.textContent = "Registrar Check-In";
+        botonCheckIn.style.cssText = "width:100%; background:#d35400; color:white; border:none; padding:8px; margin-top:10px; border-radius:4px; cursor:pointer; font-weight:bold;";
+        
+        // Conexión directa del evento (ESLint ahora sabe que la función se usa)
+        botonCheckIn.addEventListener("click", () => solicitarCheckIn(reserva.id));
+        tarjeta.appendChild(botonCheckIn);
+
+    } else if (reserva.estado === "Activo") {
+        const botonCheckOut = document.createElement("button");
+        botonCheckOut.textContent = "Registrar Check-Out";
+        botonCheckOut.style.cssText = "width:100%; background:#27ae60; color:white; border:none; padding:8px; margin-top:10px; border-radius:4px; cursor:pointer; font-weight:bold;";
+        
+        botonCheckOut.addEventListener("click", () => solicitarCheckOut(reserva.id));
+        tarjeta.appendChild(botonCheckOut);
+    }
+
+    return tarjeta;
+}
+
+async function ObtenerYMostrarReservas() {
+    try {
+        const datos = await service.listarReservas();
+
+        Reservado.innerHTML = "";
+        Activo.innerHTML = "";
+        Finalizado.innerHTML = "";
+
+        // Distribuimos las tarjetas en sus respectivos contenedores según el estado
+        datos.forEach(reserva => {
+            const nuevaTarjeta = crearTarjetaReserva(reserva);
+
+            if (reserva.estado === "Reservado") {
+                Reservado.appendChild(nuevaTarjeta);
+            } else if (reserva.estado === "Activo") {
+                Activo.appendChild(nuevaTarjeta);
+            } else if (reserva.estado === "Finalizada") {
+                Finalizado.appendChild(nuevaTarjeta);
+            }
+        });
+
+    } catch (error) {
+        console.error("Error al cargar reservas:", error);
+    }
+}
+
+ObtenerYMostrarReservas();

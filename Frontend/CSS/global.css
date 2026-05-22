@@ -1,0 +1,70 @@
+/* Estilos Globales de Reseteo */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f6f9;
+}
+
+/* Bloque Principal */
+.menu-principal {
+    text-align: center;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    max-width: 500px;
+    width: 100%;
+}
+
+/* Elementos del Bloque */
+.menu-principal__titulo {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.menu-principal__subtitulo {
+    font-size: 1rem;
+    color: #7f8c8d;
+    margin-bottom: 30px;
+}
+
+.menu-principal__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.menu-principal__enlace {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #ffffff;
+    border-radius: 6px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.menu-principal__enlace:active {
+    transform: scale(0.98);
+}
+
+/* Modificadores */
+.menu-principal__enlace--dashboard {
+    background-color: #3498db;
+}
+
+.menu-principal__enlace--formulario {
+    background-color: #2ecc71;
+}

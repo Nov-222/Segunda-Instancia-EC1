@@ -1,46 +1,69 @@
-const URL = "http://localhost:5192/api/reserva"; 
-const $inicio = document.getElementById("FechaInicio");
-const $fin = document.getElementById("FechaFin");
-const $select = document.getElementById("SelectHabitacion");
-const $form = document.getElementById("FormReserva");
+import {service} from '../Services/service.js'
 
-async function buscar() {
-    if (!$inicio.value || !$fin.value) return;
+const Formulario = document.getElementById("FormReserva");
+const FechaInicio = document.getElementById("FechaInicio");
+const FechaFin = document.getElementById("FechaFin");
+const Habitacion = document.getElementById("SelectHabitacion");
+const Documentos = document.getElementById("Documentos");
 
-    const res = await fetch(`${URL}/disponibilidad?Inicio=${$inicio.value}&Fin=${$fin.value}`);
-    const habitaciones = await res.json();
+async function BuscarHabitaciones() {
+    const inicio = FechaInicio.value;
+    const fin = FechaFin.value;
 
-    $select.innerHTML = '<option value="">-- Habitación --</option>';
-    habitaciones.forEach(h => {
-        $select.innerHTML += `<option value="${h.id}">${h.tipo_Nombre} ($${h.precio_Noche})</option>`;
-    });
-    $select.disabled = false;
+    if (!inicio || !fin) return;
+
+    try {
+        const habitaciones = await service.obtenerDisponibilidad(inicio, fin);
+
+        Habitacion.innerHTML = '';
+        const opcionDefecto = document.createElement("option");
+        opcionDefecto.value = "";
+        opcionDefecto.textContent = "-- Habitación --";
+        Habitacion.appendChild(opcionDefecto);
+
+        habitaciones.forEach(h => {
+            const option = document.createElement("option");
+            option.value = h.id;
+            option.textContent = `${h.tipo_Nombre} ($${h.precio_Noche})`;
+            Habitacion.appendChild(option);
+        });
+
+        Habitacion.disabled = false;
+    } catch (error) {
+        console.error("Error al buscar disponibilidad:", error);
+    }
 }
 
-$inicio.onchange = buscar;
-$fin.onchange = buscar;
+async function ProcesarReserva(evento) {
+    evento.preventDefault();
 
-$form.onsubmit = async (e) => {
-    e.preventDefault();
-
-    const payload = {
-        fecha_Inicio: $inicio.value,
-        fecha_Finalizacion: $fin.value,
-        id_Habitacion: parseInt($select.value),
-        documentos_Huespedes: document.getElementById("Documentos").value.split(",").map(d => d.trim())
+    const contenido_reserva = {
+        fecha_Inicio: FechaInicio.value,
+        fecha_Finalizacion: FechaFin.value,
+        id_Habitacion: parseInt(Habitacion.value),
+        documentos_Huespedes: Documentos.value.split(",").map(doc => doc.trim())
     };
 
-    const res = await fetch(`${URL}/reservar`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-    });
+    try {
+        const exito = await service.crearReserva(contenido_reserva);
 
-    if (res.ok) {
-        alert("Ha sido Reservado Exitosamente");
-        $form.reset();
-        $select.disabled = true;
-    } else {
-        alert("Inconveniente Inesperado");
+        if (exito) {
+            alert("Ha sido Reservado Exitosamente");
+            Formulario.reset();
+            Habitacion.disabled = true;
+        } else {
+            alert("Inconveniente Inesperado o Restricción de Estadía");
+        }
+    } catch (error) {
+        console.error("Error de conexión al reservar:", error);
     }
-};
+}
+
+
+function IniciarEventos() {
+    FechaInicio.addEventListener("change", BuscarHabitaciones);
+    FechaFin.addEventListener("change", BuscarHabitaciones);
+    Formulario.addEventListener("submit", ProcesarReserva);
+}
+
+IniciarEventos();

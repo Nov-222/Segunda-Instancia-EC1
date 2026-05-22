@@ -4,3 +4,10 @@
 .vscode/
 *.user
 appsettings.Development.json
+
+node_modules/
+coverage/
+reporte-eslint.html
+
+.DS_Store
+Thumbs.db
