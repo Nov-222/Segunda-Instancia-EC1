@@ -3,7 +3,7 @@ using Backend.Repositorios;
 
 namespace Backend.Servicios
 {
-    public class ConsultaServicio : IConsultaServicio
+    internal class ConsultaServicio : IConsultaServicio
     {
         private readonly IConsultaReservas repositorio;
 

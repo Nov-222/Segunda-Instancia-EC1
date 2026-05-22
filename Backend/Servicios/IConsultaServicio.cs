@@ -2,7 +2,7 @@ using Backend.DTOs;
 
 namespace Backend.Servicios
 {
-    public interface IConsultaServicio
+    internal interface IConsultaServicio
     {
         List<VisualizacionDTO> Listar_Reservas_Admin();
 

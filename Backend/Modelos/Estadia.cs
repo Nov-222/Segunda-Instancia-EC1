@@ -1,6 +1,6 @@
 namespace Backend.Modelos
 {
-    public class Estadia
+    internal class Estadia
     {
         public int Id { get; set; }
 
@@ -8,7 +8,7 @@ namespace Backend.Modelos
 
         public DateTime Fecha_Finalizacion { get; set; }
 
-        public string Estado { get; set; } 
+        public string Estado { get; set; }
 
         public int Id_Habitacion { get; set; }
 

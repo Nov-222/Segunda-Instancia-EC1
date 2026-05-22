@@ -1,4 +1,4 @@
-using Backend.Repositorios; 
+using Backend.Repositorios;
 using Backend.Servicios;
 
 var builder = WebApplication.CreateBuilder(args);

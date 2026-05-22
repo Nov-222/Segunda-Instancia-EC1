@@ -11,3 +11,12 @@ reporte-eslint.html
 
 .DS_Store
 Thumbs.db
+
+/*/TestResults/
+/TestResults/
+*.cobertura.xml
+/html/
+
+*.binlog
+*.sarif
+*.html

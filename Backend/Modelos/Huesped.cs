@@ -1,6 +1,6 @@
 namespace Backend.Modelos
 {
-    public class Huesped
+    internal class Huesped
     {
         public int Id { get; set; }
 

@@ -2,7 +2,7 @@ using Backend.DTOs;
 
 namespace Backend.Servicios
 {
-    public interface IReservarServicio
+    internal interface IReservarServicio
     {
         List<HabitacionDisponibleDTO> Consultar_Disponibilidad(DateTime Inicio, DateTime Fin);
 

@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 
 namespace Backend.Repositorios
 {
-    public class ReservarEstadia : IReservarEstadia
+    internal class ReservarEstadia : IReservarEstadia
     {
         private readonly string Configuracion;
 

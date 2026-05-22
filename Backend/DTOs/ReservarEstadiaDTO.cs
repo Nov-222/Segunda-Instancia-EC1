@@ -1,6 +1,6 @@
 namespace Backend.DTOs
 {
-    public class ReservarEstadiaDTO
+    internal class ReservarEstadiaDTO
     {
         public DateTime Fecha_Inicio { get; set; }
 

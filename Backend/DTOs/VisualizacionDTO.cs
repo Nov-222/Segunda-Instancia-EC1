@@ -1,6 +1,6 @@
 namespace Backend.DTOs
 {
-    public class VisualizacionDTO
+    internal class VisualizacionDTO
     {
         public int Id { get; set; }
 

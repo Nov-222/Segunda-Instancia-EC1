@@ -2,7 +2,7 @@ using Backend.DTOs;
 
 namespace Backend.Repositorios
 {
-    public interface IReservarEstadia
+    internal interface IReservarEstadia
     {
         List<HabitacionDisponibleDTO> Obtener_Habitaciones(DateTime Inicio, DateTime Fin);
 

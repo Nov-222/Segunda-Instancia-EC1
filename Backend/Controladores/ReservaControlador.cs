@@ -6,7 +6,7 @@ namespace Backend.Controladores
 {
     [ApiController]
     [Route("api/reserva")]
-    public class ReservaControlador : ControllerBase
+    internal class ReservaControlador : ControllerBase
     {
         private readonly IReservarServicio Servicio;
 
