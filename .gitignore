@@ -20,3 +20,5 @@ Thumbs.db
 *.binlog
 *.sarif
 *.html
+
+**/coverage_report/
