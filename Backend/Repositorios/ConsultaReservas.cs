@@ -9,7 +9,7 @@ namespace Backend.Repositorios
 
         public ConsultaReservas(IConfiguration Configuration)
         {
-            Configuracion = Configuration.GetConnectionString("DefaultConnection");
+            Configuracion = Configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
         }
 
         public List<VisualizacionDTO> Obtener_Reservas()

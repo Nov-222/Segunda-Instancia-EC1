@@ -9,7 +9,7 @@ namespace Backend.Repositorios
 
         public ReservarEstadia(IConfiguration Configuration)
         {
-            Configuracion = Configuration.GetConnectionString("DefaultConnection");
+            Configuracion = Configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
         }
 
         public List<HabitacionDisponibleDTO> Obtener_Habitaciones(DateTime Inicio, DateTime Fin)
