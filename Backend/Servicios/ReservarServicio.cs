@@ -34,9 +34,8 @@ namespace Backend.Servicios
 
             int DiasEstadia = (Datos.Fecha_Finalizacion.Date - Datos.Fecha_Inicio.Date).Days;
 
-            if (DiasEstadia <= 0) DiasEstadia = 1;
 
-            int PrecioTotalCalculado = DiasEstadia * InfoHabitacion.Precio_Noche;
+            int PrecioTotalCalculado = Calcular_Costo(DiasEstadia, InfoHabitacion.Precio_Noche);
 
             int IdNuevaEstadia = Repositorio.Guardar_Estadia(Datos, PrecioTotalCalculado);
 
@@ -50,6 +49,16 @@ namespace Backend.Servicios
             }
 
             return false;
+        }
+
+        public int Calcular_Costo(int Dias_Estadia, int Precio_Por_Noche)
+        {
+            if(Dias_Estadia <= 0)
+            {
+                Dias_Estadia = 1;
+            }
+
+            return Dias_Estadia * Precio_Por_Noche;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Backend_Test.Servicios
                 Documentos_Huespedes = new List<string> { "123" }
             };
 
-            var lista = new List<HabitacionDisponibleDTO> { new HabitacionDisponibleDTO { Id = 1, Precio_Noche = 100 }};
+            var lista = new List<HabitacionDisponibleDTO> { new HabitacionDisponibleDTO { Id = 1, Precio_Noche = 100, Tipo_Nombre = "Matrimonial" } };
 
             repositorio.Setup(r => r.Obtener_Habitaciones(It.IsAny<DateTime>(), It.IsAny<DateTime>())).Returns(lista);
 
