@@ -46,21 +46,24 @@ using (var scope = app.Services.CreateScope())
     var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
     string connectionString = config.GetConnectionString("DefaultConnection");
 
+    const string Separador = "-------------------------------------------------";
+    const string MensajeExito = "¡CONEXIÓN EXITOSA A LA BASE DE DATOS REC!";
+
     try
     {
         using (var connection = new Microsoft.Data.SqlClient.SqlConnection(connectionString))
         {
             connection.Open();
-            Console.WriteLine("-------------------------------------------------");
-            Console.WriteLine("¡CONEXIÓN EXITOSA A LA BASE DE DATOS REC!");
-            Console.WriteLine("-------------------------------------------------");
+            Console.WriteLine(Separador);
+            Console.WriteLine(MensajeExito);
+            Console.WriteLine(Separador);
         }
     }
     catch (Exception ex)
     {
-        Console.WriteLine("-------------------------------------------------");
+        Console.WriteLine(Separador);
         Console.WriteLine($"ERROR DE CONEXIÓN: {ex.Message}");
-        Console.WriteLine("-------------------------------------------------");
+        Console.WriteLine(Separador);
     }
 }
 
