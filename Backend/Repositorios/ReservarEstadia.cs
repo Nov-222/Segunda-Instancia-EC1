@@ -55,24 +55,26 @@ namespace Backend.Repositorios
                 string QueryId = "SELECT ISNULL(MAX(Id), 0) + 1 FROM Estadia";
                 Conexion.Open();
 
-                SqlCommand ComandoId = new SqlCommand(QueryId, Conexion);
-                int nuevoId = Convert.ToInt32(ComandoId.ExecuteScalar());
+                using (SqlCommand ComandoId = new SqlCommand(QueryId, Conexion))
+                {
+                    int nuevoId = Convert.ToInt32(ComandoId.ExecuteScalar());
 
-                string QueryInsert = @"
-                INSERT INTO Estadia (Id, Fecha_Inicio, Fecha_Finalizacion, Estado, Id_Habitacion, Precio_Total) 
-                VALUES (@Id, @Ini, @Fin, @Est, @IdH, @Pre)";
+                    string QueryInsert = @"
+                    INSERT INTO Estadia (Id, Fecha_Inicio, Fecha_Finalizacion, Estado, Id_Habitacion, Precio_Total) 
+                    VALUES (@Id, @Ini, @Fin, @Est, @IdH, @Pre)";
 
-                SqlCommand Comando = new SqlCommand(QueryInsert, Conexion);
-                Comando.Parameters.AddWithValue("@Id", nuevoId);
-                Comando.Parameters.AddWithValue("@Ini", Estadia.Fecha_Inicio);
-                Comando.Parameters.AddWithValue("@Fin", Estadia.Fecha_Finalizacion);
-                Comando.Parameters.AddWithValue("@Est", "Reservado");
-                Comando.Parameters.AddWithValue("@IdH", Estadia.Id_Habitacion);
-                Comando.Parameters.AddWithValue("@Pre", PrecioTotal);
+                    SqlCommand Comando = new SqlCommand(QueryInsert, Conexion);
+                    Comando.Parameters.AddWithValue("@Id", nuevoId);
+                    Comando.Parameters.AddWithValue("@Ini", Estadia.Fecha_Inicio);
+                    Comando.Parameters.AddWithValue("@Fin", Estadia.Fecha_Finalizacion);
+                    Comando.Parameters.AddWithValue("@Est", "Reservado");
+                    Comando.Parameters.AddWithValue("@IdH", Estadia.Id_Habitacion);
+                    Comando.Parameters.AddWithValue("@Pre", PrecioTotal);
 
-                Comando.ExecuteNonQuery();
+                    Comando.ExecuteNonQuery();
 
-                return nuevoId;
+                    return nuevoId;
+                }
             }
         }
 

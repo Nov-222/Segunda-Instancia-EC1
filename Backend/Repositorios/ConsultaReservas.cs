@@ -29,22 +29,24 @@ namespace Backend.Repositorios
                     JOIN Habitacion H ON E.Id_Habitacion = H.Id
                     ORDER BY E.Fecha_Inicio ASC";
 
-                SqlCommand Comando = new SqlCommand(Query, Conexion);
-                Conexion.Open();
-                using (var reader = Comando.ExecuteReader())
+                using (SqlCommand Comando = new SqlCommand(Query, Conexion))
                 {
-                    while (reader.Read())
+                    Conexion.Open();
+                    using (var reader = Comando.ExecuteReader())
                     {
-                        Reservas.Add(new VisualizacionDTO
+                        while (reader.Read())
                         {
-                            Id = (int)reader["Id"],
-                            Fecha_Inicio = (DateTime)reader["Fecha_Inicio"],
-                            Fecha_Finalizacion = (DateTime)reader["Fecha_Finalizacion"],
-                            Estado = reader["Estado"].ToString(),
-                            Nro_Habitacion = (int)reader["Nro_Habitacion"],
-                            Precio_Total = (int)reader["Precio_Total"],
-                            Nombre_Cliente = reader["Nombre_Cliente"]?.ToString() ?? "Sin Huésped"
-                        });
+                            Reservas.Add(new VisualizacionDTO
+                            {
+                                Id = (int)reader["Id"],
+                                Fecha_Inicio = (DateTime)reader["Fecha_Inicio"],
+                                Fecha_Finalizacion = (DateTime)reader["Fecha_Finalizacion"],
+                                Estado = reader["Estado"].ToString(),
+                                Nro_Habitacion = (int)reader["Nro_Habitacion"],
+                                Precio_Total = (int)reader["Precio_Total"],
+                                Nombre_Cliente = reader["Nombre_Cliente"]?.ToString() ?? "Sin Huésped"
+                            });
+                        }
                     }
                 }
             }
