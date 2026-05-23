@@ -73,13 +73,13 @@ namespace Backend_Test.Servicios
         [Test]
         public void Consultar_Disponibilidad_UnDia_DevolverListaConDato()
         {
-            var hoy = DateTime.Today; 
-            var manana = hoy.AddDays(1); 
+            var hoy = DateTime.Today;
+            var manana = hoy.AddDays(1);
 
-            var Lista= new List<HabitacionDisponibleDTO>
-            {
-                new HabitacionDisponibleDTO { Id = 1, Tipo_Nombre = "Standard", Precio_Noche = 100 }
-            };
+            var Lista = new List<HabitacionDisponibleDTO>
+    {
+        new HabitacionDisponibleDTO { Id = 1, Tipo_Nombre = "Standard", Precio_Noche = 100 }
+    };
 
             repositorio.Setup(r => r.Obtener_Habitaciones(hoy, manana)).Returns(Lista);
 
@@ -87,7 +87,7 @@ namespace Backend_Test.Servicios
 
             Assert.That(resultado, Is.Not.Empty);
 
-            
+
             repositorio.Verify(r => r.Obtener_Habitaciones(hoy, manana), Times.Once);
         }
     }
