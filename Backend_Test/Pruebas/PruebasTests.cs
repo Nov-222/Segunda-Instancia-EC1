@@ -52,5 +52,16 @@ namespace Backend_Test.Pruebas
 
             Assert.That(resultado, Is.Not.Empty);
         }
+
+        [Test]
+        public void Procesar_CheckIn_ReservaValida_Exito()
+        {
+            int IdValido = 20;
+            repositorio.Setup(f => f.Registrar_CheckIn(IdValido)).Returns(true);
+
+            var resultado = servicio.Procesar_CheckIn(IdValido);
+
+            Assert.That(resultado, Is.EqualTo(true));
+        }
     }
 }
