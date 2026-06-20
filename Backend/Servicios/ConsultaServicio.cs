@@ -11,5 +11,20 @@ namespace Backend.Servicios
         {
             repositorio = repo;
         }
+
+        public List<VisualizacionDTO> Listar_Reservas_Admin()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Procesar_CheckIn(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Procesar_CheckOut(int Id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
