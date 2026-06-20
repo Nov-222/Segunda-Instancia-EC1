@@ -19,7 +19,7 @@ namespace Backend.Servicios
 
         public bool Procesar_CheckIn(int Id)
         {
-            throw new NotImplementedException();
+            return repositorio.Registrar_CheckIn(Id);
         }
 
         public bool Procesar_CheckOut(int Id)
