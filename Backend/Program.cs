@@ -13,51 +13,29 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-
 builder.Services.AddScoped<IReservarEstadia, ReservarEstadia>();
-
 builder.Services.AddScoped<IReservarServicio, ReservarServicio>();
-
 builder.Services.AddScoped<IConsultaReservas, ConsultaReservas>();
-
 builder.Services.AddScoped<IConsultaServicio, ConsultaServicio>();
-
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
 app.UseSwagger();
-
 app.UseSwaggerUI();
-
 app.UseHttpsRedirection();
-
 app.UseCors("AllowFrontend");
-
 app.UseAuthorization();
-
 app.MapControllers();
-
-
 
 using (var scope = app.Services.CreateScope())
 {
     var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
     string connectionString = config.GetConnectionString("DefaultConnection");
-
     const string Separador = "-------------------------------------------------";
     const string MensajeExito = "¡CONEXIÓN EXITOSA A LA BASE DE DATOS REC!";
-
     try
     {
         using (var connection = new MySqlConnection(connectionString))
@@ -75,6 +53,5 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine(Separador);
     }
 }
-
 
 app.Run();
