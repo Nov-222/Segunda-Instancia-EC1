@@ -24,13 +24,9 @@ namespace Backend.Servicios
 
         public bool Confirmar_Reserva(ReservarEstadiaDTO Datos)
         {
-            var HabitacionesDisponibles = Repositorio.Obtener_Habitaciones(Datos.Fecha_Inicio, Datos.Fecha_Finalizacion);
+            var InfoHabitacion = BuscarHabitacionDisponible(Datos);
 
-            var HabitacionLibre = HabitacionesDisponibles.Any(h => h.Id == Datos.Id_Habitacion);
-
-            if (!HabitacionLibre) return false;
-
-            var InfoHabitacion = HabitacionesDisponibles.First(h => h.Id == Datos.Id_Habitacion);
+            if(InfoHabitacion == null) { return false; }
 
             int DiasEstadia = (Datos.Fecha_Finalizacion.Date - Datos.Fecha_Inicio.Date).Days;
 
@@ -59,6 +55,13 @@ namespace Backend.Servicios
             }
 
             return Dias_Estadia * Precio_Por_Noche;
+        }
+
+        public HabitacionDisponibleDTO? BuscarHabitacionDisponible(ReservarEstadiaDTO Datos)
+        {
+            var HabitacionesDisponibles = Consultar_Disponibilidad(Datos.Fecha_Inicio, Datos.Fecha_Finalizacion);
+
+            return HabitacionesDisponibles.FirstOrDefault(h => h.Id == Datos.Id_Habitacion);
         }
     }
 }
