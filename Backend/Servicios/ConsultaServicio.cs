@@ -14,7 +14,7 @@ namespace Backend.Servicios
 
         public List<VisualizacionDTO> Listar_Reservas_Admin()
         {
-            throw new NotImplementedException();
+            return repositorio.Obtener_Reservas();
         }
 
         public bool Procesar_CheckIn(int Id)
