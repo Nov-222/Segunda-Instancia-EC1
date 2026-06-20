@@ -1,5 +1,6 @@
 using Backend.Repositorios;
 using Backend.Servicios;
+using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,7 +60,7 @@ using (var scope = app.Services.CreateScope())
 
     try
     {
-        using (var connection = new Microsoft.Data.SqlClient.SqlConnection(connectionString))
+        using (var connection = new MySqlConnection(connectionString))
         {
             connection.Open();
             Console.WriteLine(Separador);
