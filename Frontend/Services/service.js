@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5192/api";
+const BASE_URL = "https://segunda-instancia-ec1-production.up.railway.app/api";
 
 export const service = {
     async obtenerDisponibilidad(inicio, fin) {
