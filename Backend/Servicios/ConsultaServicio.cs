@@ -24,7 +24,7 @@ namespace Backend.Servicios
 
         public bool Procesar_CheckOut(int Id)
         {
-            throw new NotImplementedException();
+            return repositorio.Registrar_CheckOut(Id);
         }
     }
 }
