@@ -33,6 +33,8 @@
 		<CoverletOutput>$(MSBuildProjectDirectory)\coverage.cobertura.xml</CoverletOutput>
 		<CoverletOutputFormat>cobertura</CoverletOutputFormat>
 
+		<Include>[Backend]Backend.Servicios.*,[Backend]Backend.Repositorios.*</Include>
+		
 		<Exclude>[*]Microsoft.AspNetCore.*,[*]System.Runtime.*,[*]Program</Exclude>
 
 		<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
