@@ -15,7 +15,7 @@ namespace Backend.Repositorios
         public List<VisualizacionDTO> Obtener_Reservas()
         {
             var Reservas = new List<VisualizacionDTO>();
-            using (var Conexion = new MySqlConnection(Configuracion))
+            using (var Conexion = ConexionDB.GenerarConexion(Configuracion))
             {
                 string Query = @"
                     SELECT 
@@ -31,7 +31,6 @@ namespace Backend.Repositorios
 
                 using (MySqlCommand Comando = new MySqlCommand(Query, Conexion))
                 {
-                    Conexion.Open();
                     using (var reader = Comando.ExecuteReader())
                     {
                         while (reader.Read())
@@ -55,10 +54,8 @@ namespace Backend.Repositorios
 
         public bool Registrar_CheckIn(int IdEstadia)
         {
-            using (var Conexion = new MySqlConnection(Configuracion))
+            using (var Conexion = ConexionDB.GenerarConexion(Configuracion))
             {
-                Conexion.Open();
-
                 string QueryActivo = "UPDATE Estadia SET Estado = 'Activo' WHERE Id = @Id AND Estado = 'Reservado'";
                 MySqlCommand Comando = new MySqlCommand(QueryActivo, Conexion);
                 Comando.Parameters.AddWithValue("@Id", IdEstadia);
@@ -79,10 +76,8 @@ namespace Backend.Repositorios
 
         public bool Registrar_CheckOut(int IdEstadia)
         {
-            using (var Conexion = new MySqlConnection(Configuracion))
+            using (var Conexion = ConexionDB.GenerarConexion(Configuracion))
             {
-                Conexion.Open();
-
                 string QueryFinalizado = "UPDATE Estadia SET Estado = 'Finalizada' WHERE Id = @Id AND Estado = 'Activo'";
                 MySqlCommand Comando = new MySqlCommand(QueryFinalizado, Conexion);
                 Comando.Parameters.AddWithValue("@Id", IdEstadia);

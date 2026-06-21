@@ -5,6 +5,7 @@ namespace Backend.Repositorios
 {
     public class ReservarEstadia : IReservarEstadia
     {
+
         private readonly string Configuracion;
 
         public ReservarEstadia(IConfiguration Configuration)
@@ -15,7 +16,7 @@ namespace Backend.Repositorios
         public List<HabitacionDisponibleDTO> Obtener_Habitaciones(DateTime Inicio, DateTime Fin)
         {
             var Habitaciones = new List<HabitacionDisponibleDTO>();
-            using (var Conexion = new MySqlConnection(Configuracion))
+            using (var Conexion = ConexionDB.GenerarConexion(Configuracion))
             {
                 string Query = @"
                     SELECT h.Id, th.Nombre, th.Precio_Noche 
@@ -31,7 +32,6 @@ namespace Backend.Repositorios
                 Comando.Parameters.AddWithValue("@Inicio", Inicio);
                 Comando.Parameters.AddWithValue("@Fin", Fin);
 
-                Conexion.Open();
                 using (var Lector = Comando.ExecuteReader())
                 {
                     while (Lector.Read())
@@ -50,10 +50,9 @@ namespace Backend.Repositorios
 
         public int Guardar_Estadia(ReservarEstadiaDTO Estadia, int PrecioTotal)
         {
-            using (var Conexion = new MySqlConnection(Configuracion))
+            using (var Conexion = ConexionDB.GenerarConexion(Configuracion))
             {
                 string QueryId = "SELECT IFNULL(MAX(Id), 0) + 1 FROM Estadia";
-                Conexion.Open();
 
                 using (MySqlCommand ComandoId = new MySqlCommand(QueryId, Conexion))
                 {
@@ -80,7 +79,7 @@ namespace Backend.Repositorios
 
         public void Registrar_Estadia(int IdEstadia, string Documento)
         {
-            using (var Conexion = new MySqlConnection(Configuracion))
+            using (var Conexion = ConexionDB.GenerarConexion(Configuracion))
             {
                 string Query = @"
                  INSERT INTO Huesped_Estadia (Id_Estadia, Id_Huesped)
@@ -89,8 +88,6 @@ namespace Backend.Repositorios
                 MySqlCommand Comando = new MySqlCommand(Query, Conexion);
                 Comando.Parameters.AddWithValue("@IdE", IdEstadia);
                 Comando.Parameters.AddWithValue("@Doc", Documento);
-
-                Conexion.Open();
 
                 Comando.ExecuteNonQuery();
             }
